@@ -79,7 +79,7 @@ async function wrapWithTimes(editor, itLineNum, count) {
         // Re-indent all lines in the block by prepending one tab
         for (let i = itLineNum; i <= closingLine; i++) {
             const l = doc.lineAt(i);
-            eb.replace(l.range, '\t' + l.text);
+            eb.replace(l.range, l.text.trim() === '' ? l.text : '\t' + l.text);
         }
         // Insert opening line before the it block
         eb.insert(new vscode.Position(itLineNum, 0), `${indent}Cypress._.times(${count}, () => {\n`);
