@@ -89,10 +89,10 @@ async function wrapWithTimes(editor: vscode.TextEditor, itLineNum: number, count
     const endLine = doc.lineAt(closingLine);
     eb.insert(new vscode.Position(closingLine + 1, 0), `${indent}});\n`);
 
-    // Re-indent all lines in the block
+    // Re-indent all lines in the block by prepending one tab
     for (let i = itLineNum; i <= closingLine; i++) {
       const l = doc.lineAt(i);
-      eb.replace(l.range, innerIndent + l.text.trimStart());
+      eb.replace(l.range, '\t' + l.text);
     }
 
     // Insert opening line before the it block
@@ -119,14 +119,10 @@ async function unwrapTimes(editor: vscode.TextEditor, timesLineNum: number, itLi
     const closeLineRange = doc.lineAt(timesClose).rangeIncludingLineBreak;
     eb.delete(closeLineRange);
 
-    // Dedent inner lines
+    // Dedent inner lines by removing one leading tab
     for (let i = itLineNum; i < timesClose; i++) {
       const l = doc.lineAt(i);
-      const text = l.text;
-      // Remove one level of indentation (1 tab)
-      const dedented = text.startsWith(wrapperIndent + '\t')
-        ? wrapperIndent + text.substring(wrapperIndent.length + 1)
-        : text;
+      const dedented = l.text.startsWith('\t') ? l.text.substring(1) : l.text;
       eb.replace(l.range, dedented);
     }
 
