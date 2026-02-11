@@ -82,7 +82,7 @@ async function wrapWithTimes(editor: vscode.TextEditor, itLineNum: number, count
     return;
   }
 
-  const innerIndent = indent + '  ';
+  const innerIndent = indent + '\t';
 
   await editor.edit(eb => {
     // Insert closing line after block end: indent + "});"
@@ -123,9 +123,9 @@ async function unwrapTimes(editor: vscode.TextEditor, timesLineNum: number, itLi
     for (let i = itLineNum; i < timesClose; i++) {
       const l = doc.lineAt(i);
       const text = l.text;
-      // Remove one level of indentation (2 spaces)
-      const dedented = text.startsWith(wrapperIndent + '  ')
-        ? wrapperIndent + text.substring(wrapperIndent.length + 2)
+      // Remove one level of indentation (1 tab)
+      const dedented = text.startsWith(wrapperIndent + '\t')
+        ? wrapperIndent + text.substring(wrapperIndent.length + 1)
         : text;
       eb.replace(l.range, dedented);
     }

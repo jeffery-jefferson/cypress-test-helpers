@@ -71,7 +71,7 @@ async function wrapWithTimes(editor, itLineNum, count) {
         vscode.window.showInformationMessage('Could not find end of test block.');
         return;
     }
-    const innerIndent = indent + '  ';
+    const innerIndent = indent + '\t';
     await editor.edit(eb => {
         // Insert closing line after block end: indent + "});"
         const endLine = doc.lineAt(closingLine);
@@ -104,9 +104,9 @@ async function unwrapTimes(editor, timesLineNum, itLineNum) {
         for (let i = itLineNum; i < timesClose; i++) {
             const l = doc.lineAt(i);
             const text = l.text;
-            // Remove one level of indentation (2 spaces)
-            const dedented = text.startsWith(wrapperIndent + '  ')
-                ? wrapperIndent + text.substring(wrapperIndent.length + 2)
+            // Remove one level of indentation (1 tab)
+            const dedented = text.startsWith(wrapperIndent + '\t')
+                ? wrapperIndent + text.substring(wrapperIndent.length + 1)
                 : text;
             eb.replace(l.range, dedented);
         }
