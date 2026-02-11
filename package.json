@@ -1,0 +1,44 @@
+{
+  "name": "cypress-test-helpers",
+  "displayName": "CypressTestHelpers",
+  "description": "Shortcuts for toggling .only and wrapping Cypress tests with Cypress._.times()",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Testing"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cypressTestHelpers.toggleOnly",
+        "title": "Cypress: Toggle .only"
+      },
+      {
+        "command": "cypressTestHelpers.toggleTimes",
+        "title": "Cypress: Toggle Cypress._.times() wrap"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "cypressTestHelpers.toggleOnly",
+        "key": "ctrl+alt+o",
+        "when": "editorTextFocus && editorLangId =~ /javascript|typescript|javascriptreact|typescriptreact/"
+      },
+      {
+        "command": "cypressTestHelpers.toggleTimes",
+        "key": "ctrl+alt+p",
+        "when": "editorTextFocus && editorLangId =~ /javascript|typescript|javascriptreact|typescriptreact/"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0"
+  }
+}
